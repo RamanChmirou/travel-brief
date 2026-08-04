@@ -1,0 +1,18 @@
+package com.kanapa4.travel_brief.client;
+
+import com.kanapa4.travel_brief.dto.WeatherResponse;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@FeignClient(name = "open-meteo", url = "${clients.open-meteo.url}")
+public interface OpenMeteoClient {
+    @GetMapping("/forecast")
+    WeatherResponse getForecast(
+            @RequestParam("latitude") double latitude,
+            @RequestParam("longitude") double longitude,
+            @RequestParam("daily") String daily,
+            @RequestParam("forecast_days") int forecastDays,
+            @RequestParam("timezone") String timezone
+    );
+}
