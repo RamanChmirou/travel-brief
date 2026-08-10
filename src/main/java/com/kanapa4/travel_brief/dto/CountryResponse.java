@@ -2,13 +2,20 @@ package com.kanapa4.travel_brief.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CountryResponse {
+
     @JsonProperty("names")
     private Names names;
     private List<Capital> capitals;
@@ -16,6 +23,9 @@ public class CountryResponse {
     private Long population;
 
     @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Names {
         private String common;
@@ -23,6 +33,9 @@ public class CountryResponse {
     }
 
     @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Capital {
         private String name;
@@ -30,6 +43,9 @@ public class CountryResponse {
     }
 
     @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Coordinates {
         private Double lat;
@@ -37,6 +53,9 @@ public class CountryResponse {
     }
 
     @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CurrencyInfo {
         private String code;

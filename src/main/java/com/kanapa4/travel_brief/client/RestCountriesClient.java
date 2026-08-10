@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(
         name = "rest-countries",
-        url = "${clients.rest-countries.url}",
         configuration = FeignConfig.class
 )
 public interface RestCountriesClient {
