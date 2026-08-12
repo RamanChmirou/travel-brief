@@ -1,11 +1,12 @@
 package com.kanapa4.travel_brief.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kanapa4.travel_brief.dto.CountryResponse;
-import com.kanapa4.travel_brief.dto.RestCountriesResponse;
+import com.kanapa4.travel_brief.TestConfig;
+import com.kanapa4.travel_brief.dto.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.wiremock.spring.EnableWireMock;
 
 import java.util.List;
@@ -15,9 +16,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @EnableWireMock
+@Import(TestConfig.class)
 public class RestCountriesClientTest {
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Autowired
     private RestCountriesClient restCountriesClient;
@@ -25,21 +27,21 @@ public class RestCountriesClientTest {
     @Test
     void getCountryByName_DataCorrect_ReturnsRestCountriesResponse() throws Exception {
         CountryResponse country = CountryResponse.builder()
-                .names(CountryResponse.Names.builder()
+                .names(Names.builder()
                         .common("Poland")
                         .official("Republic of Poland")
                         .build())
                 .capitals(List.of(
-                        CountryResponse.Capital.builder()
+                        Capital.builder()
                                 .name("Warsaw")
-                                .coordinates(CountryResponse.Coordinates.builder()
+                                .coordinates(Coordinates.builder()
                                         .lat(52.23)
                                         .lng(21.01)
                                         .build())
                                 .build()
                 ))
                 .currencies(List.of(
-                        CountryResponse.CurrencyInfo.builder()
+                        CurrencyInfo.builder()
                                 .code("PLN")
                                 .name("Polish złoty")
                                 .symbol("zł")

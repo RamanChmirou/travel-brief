@@ -1,10 +1,12 @@
 package com.kanapa4.travel_brief.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kanapa4.travel_brief.TestConfig;
 import com.kanapa4.travel_brief.dto.ExchangeRateResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.wiremock.spring.EnableWireMock;
 
 import java.math.BigDecimal;
@@ -16,8 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @EnableWireMock
+@Import(TestConfig.class)
 public class FrankfurterClientTest {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Autowired
     private FrankfurterClient frankfurterClient;

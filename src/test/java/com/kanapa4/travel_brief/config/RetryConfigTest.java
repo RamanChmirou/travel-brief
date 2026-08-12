@@ -7,6 +7,7 @@ import feign.FeignException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.wiremock.spring.EnableWireMock;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @EnableWireMock
+@TestPropertySource(properties = "spring.cloud.openfeign.circuitbreaker.enabled=false")
 public class RetryConfigTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();

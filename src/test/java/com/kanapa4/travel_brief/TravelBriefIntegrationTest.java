@@ -98,21 +98,21 @@ public class TravelBriefIntegrationTest {
                 .willReturn(okJson(jsonOpenMeteo)));
 
         CountryResponse country = CountryResponse.builder()
-                .names(CountryResponse.Names.builder()
+                .names(Names.builder()
                         .common("Japan")
                         .official("Japan")
                         .build())
                 .capitals(List.of(
-                        CountryResponse.Capital.builder()
+                        Capital.builder()
                                 .name("Tokyo")
-                                .coordinates(CountryResponse.Coordinates.builder()
+                                .coordinates(Coordinates.builder()
                                         .lat(35.6762)
                                         .lng(139.6503)
                                         .build())
                                 .build()
                 ))
                 .currencies(List.of(
-                        CountryResponse.CurrencyInfo.builder()
+                        CurrencyInfo.builder()
                                 .code("JPY")
                                 .name("Japanese yen")
                                 .symbol("¥")

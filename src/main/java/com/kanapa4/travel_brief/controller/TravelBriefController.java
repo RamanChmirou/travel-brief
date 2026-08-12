@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class TravelBriefController {
     private final TravelBriefService travelBriefService;
+
     @GetMapping("/travel-brief")
     public TravelBriefResponse getTravelBrief(@RequestParam String country, @RequestParam BigDecimal budgetPln) {
         return travelBriefService.getTravelBrief(country, budgetPln);
