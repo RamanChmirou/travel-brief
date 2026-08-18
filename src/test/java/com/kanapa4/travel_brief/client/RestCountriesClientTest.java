@@ -1,12 +1,10 @@
 package com.kanapa4.travel_brief.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kanapa4.travel_brief.TestConfig;
+import tools.jackson.databind.ObjectMapper;
 import com.kanapa4.travel_brief.dto.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.wiremock.spring.EnableWireMock;
 
 import java.util.List;
@@ -16,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @EnableWireMock
-@Import(TestConfig.class)
 public class RestCountriesClientTest {
     @Autowired
     private ObjectMapper objectMapper;
@@ -25,7 +22,7 @@ public class RestCountriesClientTest {
     private RestCountriesClient restCountriesClient;
 
     @Test
-    void getCountryByName_DataCorrect_ReturnsRestCountriesResponse() throws Exception {
+    void getCountryByName_DataCorrect_ReturnsRestCountriesResponse() {
         CountryResponse country = CountryResponse.builder()
                 .names(Names.builder()
                         .common("Poland")

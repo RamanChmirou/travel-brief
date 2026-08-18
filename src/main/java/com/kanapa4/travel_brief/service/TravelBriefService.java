@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,12 +26,9 @@ public class TravelBriefService {
     }
 
     private CountryResponse fetchCountryData(String country) {
-        CountryResponse countryData = countryDataExtractor.extractCountry(
-                restCountriesClient.getCountryByName(country));
-        if (countryData == null) {
-            return null;
-        }
-        return countryData;
+        return Optional.ofNullable(restCountriesClient.getCountryByName(country))
+                .map(countryDataExtractor::extractCountry)
+                .orElse(null);
     }
 
     private TravelBriefResponse buildResponse(CountryResponse countryData, String country,

@@ -1,12 +1,10 @@
 package com.kanapa4.travel_brief.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kanapa4.travel_brief.TestConfig;
+import tools.jackson.databind.ObjectMapper;
 import com.kanapa4.travel_brief.dto.WeatherResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.wiremock.spring.EnableWireMock;
 
 import java.util.List;
@@ -16,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @EnableWireMock
-@Import(TestConfig.class)
 public class OpenMeteoClientTest {
     @Autowired
     private ObjectMapper objectMapper;
@@ -24,7 +21,7 @@ public class OpenMeteoClientTest {
     @Autowired
     OpenMeteoClient openMeteoClient;
     @Test
-    void getForecast_DataCorrect_ReturnWeatherResponse() throws Exception {
+    void getForecast_DataCorrect_ReturnWeatherResponse() {
         WeatherResponse expectedResponse = WeatherResponse.builder()
                 .daily(WeatherResponse.Daily.builder()
                         .time(List.of("2026-08-04"))

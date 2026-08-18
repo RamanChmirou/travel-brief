@@ -1,71 +1,58 @@
 package com.kanapa4.travel_brief.service;
 
-import com.kanapa4.travel_brief.client.RestCountriesClient;
 import com.kanapa4.travel_brief.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class CountryDataExtractor {
-    private final RestCountriesClient restCountriesClient;
-
-    public CountryResponse fetchCountryData(String country) {
-        return extractCountry(restCountriesClient.getCountryByName(country));
-    }
 
     public CountryResponse extractCountry(RestCountriesResponse response) {
-        if (response != null && response.getData() != null
-                && response.getData().getObjects() != null
-                && !response.getData().getObjects().isEmpty()) {
-            return response.getData().getObjects().getFirst();
-        }
-        return null;
+        return Optional.ofNullable(response)
+                .map(RestCountriesResponse::getData)
+                .map(RestCountriesResponse.DataWrapper::getObjects)
+                .filter(objects -> !CollectionUtils.isEmpty(objects))
+                .map(List::getFirst)
+                .orElse(null);
     }
 
     public String extractCountryName(CountryResponse countryData, String fallback) {
-        if (countryData.getNames() != null && countryData.getNames().getCommon() != null) {
-            return countryData.getNames().getCommon();
-        }
-        return fallback;
+        return Optional.ofNullable(countryData)
+                .map(CountryResponse::getNames)
+                .map(Names::getCommon)
+                .orElse(fallback);
     }
 
-
     public String extractCapital(CountryResponse countryData) {
-        if (countryData.getCapitals() != null && !countryData.getCapitals().isEmpty()) {
-            Capital capital = countryData.getCapitals().getFirst();
-            if (capital.getName() != null) {
-                return capital.getName();
-            }
-        }
-        return "Unknown";
+        return Optional.ofNullable(countryData)
+                .map(CountryResponse::getCapitals)
+                .filter(capitals -> !CollectionUtils.isEmpty(capitals))
+                .map(List::getFirst)
+                .map(Capital::getName)
+                .orElse("Unknown");
     }
 
     public CurrencyDto extractCurrency(CountryResponse countryData) {
-        if (countryData.getCurrencies() != null && !countryData.getCurrencies().isEmpty()) {
-            CurrencyInfo first = countryData.getCurrencies().getFirst();
-            if (first != null) {
-                return new CurrencyDto(first.getCode(), first.getName());
-            }
-        }
-        return null;
+        return Optional.ofNullable(countryData)
+                .map(CountryResponse::getCurrencies)
+                .filter(currencies -> !CollectionUtils.isEmpty(currencies))
+                .map(List::getFirst)
+                .map(first -> new CurrencyDto(first.getCode(), first.getName()))
+                .orElse(null);
     }
 
     public Coordinates extractCapitalCoordinates(CountryResponse countryData) {
-        if (countryData.getCapitals() == null || countryData.getCapitals().isEmpty()) {
-            return null;
-        }
-
-        Capital capital = countryData.getCapitals().getFirst();
-        if (capital.getCoordinates() == null) {
-            return null;
-        }
-
-        Coordinates coords = capital.getCoordinates();
-        if (coords.getLat() == null || coords.getLng() == null) {
-            return null;
-        }
-
-        return coords;
+        return Optional.ofNullable(countryData)
+                .map(CountryResponse::getCapitals)
+                .filter(capitals -> !CollectionUtils.isEmpty(capitals))
+                .map(List::getFirst)
+                .map(Capital::getCoordinates)
+                .filter(coords -> coords.getLat() != null && coords.getLng() != null)
+                .orElse(null);
     }
 }
